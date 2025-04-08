@@ -22,5 +22,6 @@ def main():
     texto = input("Introduce el texto cifrado (por ejemplo: ROGZZ3P4O_Q1J3): ")
     ataque_fuerza_bruta(texto)
 
+#Función principal
 if __name__ == "__main__":
     main()
