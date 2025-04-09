@@ -1,24 +1,21 @@
-import base64
+import base64 #libreria que permite codficar y decodificar base64
 #Función para el codificador en base64
 def codificar_base64(texto):
-    # Convertir el texto a bytes (UTF-8)
+    # Convertir el texto en bytes utilizando la codificación UTF-8
     bytes_texto = texto.encode('utf-8')
-    # Codificar en Base64
+    # Codificar los bytes en Base64
     bytes_codificados = base64.b64encode(bytes_texto)
-    # Devolver como string
+    # Convertir el resultado nuevamente a string para poder imprimirlo
     return bytes_codificados.decode('utf-8')
 
 #Función para la decodificación en base64
 def decodificar_base64(texto_codificado):
-    try:
         # Convertir el texto codificado a bytes
         bytes_codificados = texto_codificado.encode('utf-8')
-        # Decodificar de Base64
+        # Decodificar de Base64 a su representación original
         bytes_decodificados = base64.b64decode(bytes_codificados)
-        # Devolver como string
+        # Devolver el texto original decodificado como string
         return bytes_decodificados.decode('utf-8')
-    except Exception as e:
-        return f"Error al decodificar: {str(e)}"
 
 #Programa principal
 if __name__ == "__main__":
@@ -29,14 +26,14 @@ if __name__ == "__main__":
 
     opcion = input("Seleccione una de las opciones: ")
     if opcion == "1":
-        texto = input("Introduzca el texto a codificar, por ejemplo (VVJKQ3tTTTRMTF9CNFMzXzY0fQ==): ")
+        texto = input("Introduzca el texto a codificar, por ejemplo (hola): ")
         resultado = codificar_base64(texto)
-        print("\n Texto codificado: ")
+        print("Texto codificado: ")
         print(resultado)
     elif opcion == "2":
         texto = input("Introduzca el texto a decodificar, por ejemplo (VVJKQ3tTTTRMTF9CNFMzXzY0fQ==): ")
         resultado = decodificar_base64(texto)
-        print("\n Texto decodificado: ")
+        print("Texto decodificado: ")
         print(resultado)
     else:
         print("Saliendo...")
