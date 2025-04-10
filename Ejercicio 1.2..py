@@ -31,7 +31,8 @@ if __name__ == "__main__":
         print("Texto codificado: ")
         print(resultado)
     elif opcion == "2":
-        texto = input("Introduzca el texto a decodificar, por ejemplo (VVJKQ3tTTTRMTF9CNFMzXzY0fQ==): ")
+        print("Introduzca el texto a decodificar, por ejemplo (VVJKQ3tTTTRMTF9CNFMzXzY0fQ==):")
+        texto = input()
         resultado = decodificar_base64(texto)
         print("Texto decodificado: ")
         print(resultado)
