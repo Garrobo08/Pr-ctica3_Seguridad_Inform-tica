@@ -4,7 +4,7 @@ from cryptography.hazmat.primitives import padding
 from binascii import hexlify, unhexlify
 
 # Clave e IV de 16 bytes (128 bits)
-key_iv = b"SeguridadInforma"
+key_iv = b"SeguridadInforma" #Dada por enunciado
 
 
 # Función para cifrar en AES-128 CBC

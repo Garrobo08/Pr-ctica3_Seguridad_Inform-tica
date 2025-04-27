@@ -1,45 +1,28 @@
-import base64
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.backends import default_backend
+from binascii import unhexlify
+from cryptography.hazmat.primitives import padding
 
+# Clave e IV de 16 bytes
+key_iv = b"SeguridadInforma"  # 16 bytes para AES-128
 
-def codificar_base64(texto):
-    # Convertir el texto a bytes (UTF-8)
-    bytes_texto = texto.encode('utf-8')
-    # Codificar en Base64
-    bytes_codificados = base64.b64encode(bytes_texto)
-    # Devolver como string
-    return bytes_codificados.decode('utf-8')
+def aes_decrypt_cbc(cipher_hex: str) -> str:
+    cipher_bytes = unhexlify(cipher_hex)
 
+    cipher = Cipher(algorithms.AES(key_iv), modes.CBC(key_iv), backend=default_backend())
+    decryptor = cipher.decryptor()
+    decrypted_padded = decryptor.update(cipher_bytes) + decryptor.finalize()
 
-def decodificar_base64(texto_codificado):
-    # Convertir el texto codificado a bytes
-    bytes_codificados = texto_codificado.encode('utf-8')
-    # Decodificar de Base64
-    bytes_decodificados = base64.b64decode(bytes_codificados)
-    # Devolver como string
-    return bytes_decodificados.decode('utf-8')
+    # Eliminar el padding PKCS7
+    unpadder = padding.PKCS7(128).unpadder()
+    decrypted = unpadder.update(decrypted_padded) + unpadder.finalize()
 
+    return decrypted.decode()
 
-
-def main():
-    print("Codificador y Decodificador Base64")
-    print("1. Codificar texto a Base64")
-    print("2. Decodificar texto desde Base64")
-
-    opcion = input("Seleccione una opción (1/2): ")
-
-    if opcion == '1':
-        texto = input("Introduzca el texto a codificar: ")
-        resultado = codificar_base64(texto)
-        print("\nTexto codificado:")
-        print(resultado)
-    elif opcion == '2':
-        texto = input("Introduzca el texto a decodificar: ")
-        resultado = decodificar_base64(texto)
-        print("\nTexto decodificado:")
-        print(resultado)
-    else:
-        print("Opción no válida.")
-
-
-if __name__ == "__main__":
-    main()
+# === Prueba con el cifrado dado ===
+cifrado_hex = "F55228945ACF1A291DB0C84409852406"
+try:
+    texto_descifrado = aes_decrypt_cbc(cifrado_hex)
+    print("Texto descifrado:", texto_descifrado)
+except Exception as e:
+    print("Error al descifrar:", e)
